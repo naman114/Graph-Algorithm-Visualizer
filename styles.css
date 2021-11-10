@@ -1,0 +1,55 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    font-size: 14;
+}
+
+.container {
+    height: 100vh;
+}
+
+.grid{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-container{
+    width: 800px;
+    height: 400px;
+    background-color: gray;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.grid-cell-row{
+    display: flex;
+}
+
+.grid-cell{
+    min-width: 25px;
+    min-height: 25px;
+    border: 1px solid lightgray;
+    font-size: 18px;
+}
+
+.source-cell{
+    background-color: lime;
+}
+
+.destination-cell{
+    background-color: red;
+}
+
+.explore-cell{
+    background-color: royalblue;
+}
+
+.finalpath-cell{
+    background-color: yellow;
+}
