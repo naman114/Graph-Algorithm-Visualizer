@@ -57,10 +57,14 @@ startBtn.addEventListener("click", () => {
   DFS();
 });
 
+// Exploration time in milliseconds
+let explorationTime = 30;
+
 // Reset grid button
 let resetGridBtn = document.getElementById("reset-grid");
 resetGridBtn.addEventListener("click", () => {
   resetGrid();
+  explorationTime = 30;
 });
 
 function resetGrid() {
@@ -78,9 +82,6 @@ function resetGrid() {
 let distanceFromSrc;
 const inf = 100000;
 let state;
-
-// Exploration time in milliseconds
-let explorationTime = 30;
 
 let dx=[0,0,1,-1];
 let dy=[1,-1,0,0];
