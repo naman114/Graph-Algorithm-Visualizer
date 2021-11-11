@@ -7,55 +7,81 @@ const srcCol = 7;
 const desRow = 11;
 const desCol = 27;
 
-// Adding grid cells
-let gridContainer = document.querySelector(".grid-container");
-let createdGrid = "";
-
-for (let i = 0; i < totalRows; ++i) {
-  currentRow = `<div class="grid-cell-row">`;
-
-  for (let j = 0; j < totalCols; ++j) {
-    if (i === srcRow && j === srcCol)
-      currentRow += `<div class="grid-cell source-cell" id="row-${i}-col-${j}"></div>`;
-    else if (i === desRow && j === desCol)
-      currentRow += `<div class="grid-cell destination-cell" id="row-${i}-col-${j}"></div>`;
-    else {
-      currentRow += `<div class="grid-cell" id="row-${i}-col-${j}"></div>`;
-    }
-  }
-  currentRow += `</div>`;
-  createdGrid += currentRow;
-}
-
-gridContainer.innerHTML = createdGrid;
+// Setting / refreshing the grid
+setGrid();
 
 // Adding obstacles on drag
-let allGridCells = document.querySelectorAll(".grid-cell");
-let mouseDown = false;
-
-for (let cell of allGridCells) {
-  let row = cell.id.split("-")[1];
-  let col = cell.id.split("-")[3];
-  if ((row == srcRow && col == srcCol) || (row == desRow && col == desCol))
-    continue;
-
-  cell.addEventListener("mousedown", () => {
-    mouseDown = true;
-    cell.classList.add("obstacle-cell");
-  });
-  cell.addEventListener("mouseover", () => {
-    if (mouseDown) cell.classList.add("obstacle-cell");
-  });
-}
-document.addEventListener("mouseup", () => {
-  mouseDown = false;
-});
+addObstacleEventListeners();
 
 // Starting BFS on click
 let startBtn = document.getElementById("start");
 startBtn.addEventListener("click", () => {
   BFS();
 });
+
+// Reset grid button
+let resetGridBtn = document.getElementById("reset-grid");
+resetGridBtn.addEventListener("click", () => {
+  resetGrid();
+});
+
+function setGrid() {
+  let gridContainer = document.querySelector(".grid-container");
+  let createdGrid = "";
+
+  for (let i = 0; i < totalRows; ++i) {
+    currentRow = `<div class="grid-cell-row">`;
+
+    for (let j = 0; j < totalCols; ++j) {
+      if (i === srcRow && j === srcCol)
+        currentRow += `<div class="grid-cell source-cell" id="row-${i}-col-${j}"></div>`;
+      else if (i === desRow && j === desCol)
+        currentRow += `<div class="grid-cell destination-cell" id="row-${i}-col-${j}"></div>`;
+      else {
+        currentRow += `<div class="grid-cell" id="row-${i}-col-${j}"></div>`;
+      }
+    }
+    currentRow += `</div>`;
+    createdGrid += currentRow;
+  }
+
+  gridContainer.innerHTML = createdGrid;
+}
+
+function resetGrid() {
+  let allGridCells = document.querySelectorAll(".grid-cell");
+  for (let cell of allGridCells) {
+    let row = cell.id.split("-")[1];
+    let col = cell.id.split("-")[3];
+    if ((row == srcRow && col == srcCol) || (row == desRow && col == desCol))
+      continue;
+
+    cell.classList = "grid-cell";
+  }
+}
+
+function addObstacleEventListeners() {
+  let allGridCells = document.querySelectorAll(".grid-cell");
+  let mouseDown = false;
+
+  for (let cell of allGridCells) {
+    let row = cell.id.split("-")[1];
+    let col = cell.id.split("-")[3];
+    if ((row == srcRow && col == srcCol) || (row == desRow && col == desCol))
+      continue;
+
+    cell.addEventListener("mousedown", () => {
+      mouseDown = true;
+      cell.classList.add("obstacle-cell");
+    });
+    cell.addEventListener("mouseover", () => {
+      if (mouseDown) cell.classList.add("obstacle-cell");
+    });
+  }
+  document.addEventListener("mouseup", () => {
+    mouseDown = false;
+  });
+}
 
 function BFS() {
   let bfsQueue = [];
