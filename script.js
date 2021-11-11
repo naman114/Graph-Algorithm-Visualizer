@@ -29,9 +29,8 @@ for (let i = 0; i < totalRows; ++i) {
 
 gridContainer.innerHTML = createdGrid;
 
-// Starting BFS
+// Starting BFS on click
 let startBtn = document.getElementById("start");
-
 startBtn.addEventListener("click", () => {
   BFS();
 });
@@ -43,6 +42,7 @@ function BFS() {
   let distanceFromSrc = [];
   const inf = 100000;
 
+  // Initialise distanceFromSrc for every cell as inf except src cell
   for (let i = 0; i < totalRows; ++i) {
     let currentRow = [];
     for (let j = 0; j < totalCols; ++j) {
@@ -52,26 +52,22 @@ function BFS() {
     distanceFromSrc.push(currentRow);
   }
 
-  let explorationTime = 25;
+  // Exploration time in milliseconds
+  let explorationTime = 150;
   while (bfsQueue.length !== 0) {
     let currentCell = bfsQueue.shift();
     let row = currentCell[0];
     let col = currentCell[1];
 
-    if (row == desRow && col == desCol) {
-      break;
-    }
+    if (row == desRow && col == desCol) break;
 
     if (row !== srcRow || col !== srcCol) {
       setTimeout(() => {
         let currentCellHTML = document.getElementById(`row-${row}-col-${col}`);
-        if (!currentCellHTML) {
-          console.log(`row-${row}-col-${col}`);
-        }
         currentCellHTML.classList.add("explore-cell");
       }, explorationTime);
 
-      explorationTime += 25;
+      explorationTime += 150;
     }
 
     let dxy = [-1, 0, 1, 0, -1];
@@ -131,7 +127,7 @@ function BFS() {
         let currentCellHTML = document.getElementById(`row-${row}-col-${col}`);
         currentCellHTML.classList.add("finalpath-cell");
       }, finalPathExplorationTime);
-      finalPathExplorationTime += 100;
+      finalPathExplorationTime += 150;
     }
   }
 }

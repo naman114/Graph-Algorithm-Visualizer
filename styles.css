@@ -8,10 +8,12 @@ body {
     font-size: 14;
 }
 
+/* Outermost Div */
 .container {
     height: 100vh;
 }
 
+/* Container for whole grid */
 .grid{
     height: 100vh;
     display: flex;
@@ -19,6 +21,7 @@ body {
     align-items: center;
 }
 
+/* Container for the cells */
 .grid-container{
     width: 800px;
     height: 400px;
@@ -27,10 +30,12 @@ body {
     flex-wrap: wrap;
 }
 
+/* Container for a row of cells */
 .grid-cell-row{
     display: flex;
 }
 
+/* Cell styling */
 .grid-cell{
     min-width: 25px;
     min-height: 25px;
@@ -38,6 +43,7 @@ body {
     font-size: 18px;
 }
 
+/* Cell States */
 .source-cell{
     background-color: lime;
 }
