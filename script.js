@@ -7,11 +7,49 @@ const srcCol = 7;
 const desRow = 11;
 const desCol = 27;
 
-// Setting / refreshing the grid
-setGrid();
+// Setting the grid
+let gridContainer = document.querySelector(".grid-container");
+let createdGrid = "";
+
+for (let i = 0; i < totalRows; ++i) {
+  currentRow = `<div class="grid-cell-row">`;
+
+  for (let j = 0; j < totalCols; ++j) {
+    if (i === srcRow && j === srcCol)
+      currentRow += `<div class="grid-cell source-cell" id="row-${i}-col-${j}"></div>`;
+    else if (i === desRow && j === desCol)
+      currentRow += `<div class="grid-cell destination-cell" id="row-${i}-col-${j}"></div>`;
+    else {
+      currentRow += `<div class="grid-cell" id="row-${i}-col-${j}"></div>`;
+    }
+  }
+  currentRow += `</div>`;
+  createdGrid += currentRow;
+}
+
+gridContainer.innerHTML = createdGrid;
 
 // Adding obstacles on drag
-addObstacleEventListeners();
+let allGridCells = document.querySelectorAll(".grid-cell");
+let mouseDown = false;
+
+for (let cell of allGridCells) {
+  let row = cell.id.split("-")[1];
+  let col = cell.id.split("-")[3];
+  if ((row == srcRow && col == srcCol) || (row == desRow && col == desCol))
+    continue;
+
+  cell.addEventListener("mousedown", () => {
+    mouseDown = true;
+    cell.classList.add("obstacle-cell");
+  });
+  cell.addEventListener("mouseover", () => {
+    if (mouseDown) cell.classList.add("obstacle-cell");
+  });
+}
+document.addEventListener("mouseup", () => {
+  mouseDown = false;
+});
 
 // Starting BFS on click
 let startBtn = document.getElementById("start");
@@ -25,29 +63,6 @@ resetGridBtn.addEventListener("click", () => {
   resetGrid();
 });
 
-function setGrid() {
-  let gridContainer = document.querySelector(".grid-container");
-  let createdGrid = "";
-
-  for (let i = 0; i < totalRows; ++i) {
-    currentRow = `<div class="grid-cell-row">`;
-
-    for (let j = 0; j < totalCols; ++j) {
-      if (i === srcRow && j === srcCol)
-        currentRow += `<div class="grid-cell source-cell" id="row-${i}-col-${j}"></div>`;
-      else if (i === desRow && j === desCol)
-        currentRow += `<div class="grid-cell destination-cell" id="row-${i}-col-${j}"></div>`;
-      else {
-        currentRow += `<div class="grid-cell" id="row-${i}-col-${j}"></div>`;
-      }
-    }
-    currentRow += `</div>`;
-    createdGrid += currentRow;
-  }
-
-  gridContainer.innerHTML = createdGrid;
-}
-
 function resetGrid() {
   let allGridCells = document.querySelectorAll(".grid-cell");
   for (let cell of allGridCells) {
@@ -58,29 +73,6 @@ function resetGrid() {
 
     cell.classList = "grid-cell";
   }
-}
-
-function addObstacleEventListeners() {
-  let allGridCells = document.querySelectorAll(".grid-cell");
-  let mouseDown = false;
-
-  for (let cell of allGridCells) {
-    let row = cell.id.split("-")[1];
-    let col = cell.id.split("-")[3];
-    if ((row == srcRow && col == srcCol) || (row == desRow && col == desCol))
-      continue;
-
-    cell.addEventListener("mousedown", () => {
-      mouseDown = true;
-      cell.classList.add("obstacle-cell");
-    });
-    cell.addEventListener("mouseover", () => {
-      if (mouseDown) cell.classList.add("obstacle-cell");
-    });
-  }
-  document.addEventListener("mouseup", () => {
-    mouseDown = false;
-  });
 }
 
 function BFS() {
@@ -101,7 +93,8 @@ function BFS() {
   }
 
   // Exploration time in milliseconds
-  let explorationTime = 50;
+  let explorationTime = 30;
+
   while (bfsQueue.length !== 0) {
     let currentCell = bfsQueue.shift();
     let row = currentCell[0];
@@ -110,12 +103,13 @@ function BFS() {
     if (row == desRow && col == desCol) break;
 
     let currentCellHTML = document.getElementById(`row-${row}-col-${col}`);
+
     if (row !== srcRow || col !== srcCol) {
       setTimeout(() => {
         currentCellHTML.classList.add("explore-cell");
       }, explorationTime);
 
-      explorationTime += 50;
+      explorationTime += 30;
     }
 
     let dxy = [-1, 0, 1, 0, -1];
@@ -138,6 +132,7 @@ function BFS() {
       }
     }
   }
+  console.log("BFS done");
 
   if (distanceFromSrc[desRow][desCol] !== inf) {
     let finalPath = [[desRow, desCol]];
@@ -145,7 +140,6 @@ function BFS() {
     let curY = desCol;
 
     while (curX !== srcRow || curY !== srcCol) {
-      let currentCellHTML = document.getElementById(`row-${curX}-col-${curY}`);
       let dxy = [-1, 0, 1, 0, -1];
       for (let i = 0; i < 5; ++i) {
         let tx = curX + dxy[i];
@@ -158,16 +152,20 @@ function BFS() {
             ty < 0 ||
             ty >= totalCols ||
             distanceFromSrc[tx][ty] !== distanceFromSrc[curX][curY] - 1 ||
-            currentCellHTML.classList.contains("obstacle-cell")
+            document
+              .getElementById(`row-${tx}-col-${ty}`)
+              .classList.contains("obstacle-cell")
           )
         ) {
           finalPath.push([tx, ty]);
           curX = tx;
           curY = ty;
-          break;
+          // break;
         }
       }
     }
+
+    console.log("Path done");
 
     finalPath.reverse();
     let finalPathExplorationTime = explorationTime;
@@ -178,7 +176,10 @@ function BFS() {
         let currentCellHTML = document.getElementById(`row-${row}-col-${col}`);
         currentCellHTML.classList.add("finalpath-cell");
       }, finalPathExplorationTime);
-      finalPathExplorationTime += 50;
+      finalPathExplorationTime += 30;
     }
+
+    console.log("Path UI done");
+    console.log(finalPath);
   }
 }
