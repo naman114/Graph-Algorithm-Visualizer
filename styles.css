@@ -56,14 +56,14 @@ body {
     background-color: royalblue;
 }
 
-.finalpath-cell{
-    background-color: yellow;
+.bomb-cell{
+    background-color: orangered;
 }
 
 .obstacle-cell{
     background-color: black;
 }
 
-.bomb-cell{
-    background-color: orangered;
+.finalpath-cell{
+    background-color: yellow;
 }

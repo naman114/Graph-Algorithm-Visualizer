@@ -150,19 +150,30 @@ function resetGrid() {
 
 function Dijkstra() {
   const pq = new PriorityQueue((a, b) => a[0] < b[0]); // path weight, row, col
-  pq.push([0, srcRow, srcCol, [[srcRow, srcCol]]]);
+  pq.push([0, srcRow, srcCol]);
 
   let visited = [];
+  let distance = [];
+  let parent = [];
+
+  let inf = 100000;
 
   for (let i = 0; i < totalRows; ++i) {
-    let currentRow = [];
+    let currentRowDistance = [];
+    let currentRowParent = [];
+    let currentRowVisited = [];
     for (let j = 0; j < totalCols; ++j) {
-      currentRow.push(false);
+      if (i === srcRow && j === srcCol) currentRowDistance.push(0);
+      else currentRowDistance.push(inf);
+      currentRowParent.push([null, null]);
+      currentRowVisited.push(false);
     }
-    visited.push(currentRow);
+    distance.push(currentRowDistance);
+    parent.push(currentRowParent);
+    visited.push(currentRowVisited);
   }
 
-  let finalPath;
+  visited[srcRow][srcCol] = true;
 
   // Exploration time in milliseconds
   let explorationTime = 30;
@@ -172,14 +183,10 @@ function Dijkstra() {
     let weight = currentCell[0];
     let row = currentCell[1];
     let col = currentCell[2];
-    let path = currentCell[3];
+    visited[row][col] = true;
 
-    console.log(weight);
-
-    // console.log(weight);
     if (row == desRow && col == desCol) {
       console.log("YES");
-      finalPath = path;
       break;
     }
     console.log("Hello");
@@ -197,7 +204,7 @@ function Dijkstra() {
     for (let i = 0; i < 4; ++i) {
       let tx = row + dxy[i];
       let ty = col + dxy[i + 1];
-      // console.log(row, col, tx, ty);
+
       if (
         !(
           tx < 0 ||
@@ -211,35 +218,54 @@ function Dijkstra() {
         )
       ) {
         let targetCellHTML = document.getElementById(`row-${tx}-col-${ty}`);
-        let tempPath = path;
-        tempPath.push([tx, ty]);
 
-        if (targetCellHTML.classList.contains("bomb-cell")) {
-          pq.push([weight + 10, tx, ty, tempPath]);
-        } else {
-          pq.push([weight + 1, tx, ty, tempPath]);
+        let targetCellWeight = targetCellHTML.classList.contains("bomb-cell")
+          ? 10
+          : 1;
+        if (distance[tx][ty] > distance[row][col] + targetCellWeight) {
+          pq.push([weight + targetCellWeight, tx, ty]);
+          distance[tx][ty] = distance[row][col] + targetCellWeight;
+          parent[tx][ty] = [row, col];
         }
-        visited[tx][ty] = true;
       }
     }
   }
-  console.log(finalPath);
   console.log("Dijkstra done");
+  console.log(distance[desRow][desCol]);
 
-  if (finalPath) {
-    let finalPathExplorationTime = explorationTime;
-    for (let i = 1; i < finalPath.length - 1; ++i) {
-      let row = finalPath[i][0];
-      let col = finalPath[i][1];
-      setTimeout(() => {
-        let currentCellHTML = document.getElementById(`row-${row}-col-${col}`);
-        currentCellHTML.classList.add("finalpath-cell");
-      }, finalPathExplorationTime);
-      finalPathExplorationTime += 30;
+  if (parent[desRow][desCol][0]) {
+    let curX = desRow,
+      curY = desCol;
+    let finalPath = [];
+    while (curX !== srcRow || curY !== srcCol) {
+      console.log(curX, curY, parent[curX][curY]);
+      let a = parent[curX][curY][0];
+      let b = parent[curX][curY][1];
+      curX = a;
+      curY = b;
+      finalPath.push([curX, curY]);
     }
+    finalPath.reverse();
 
-    console.log("Path UI done");
-    console.log(finalPath);
+    if (finalPath) {
+      let finalPathExplorationTime = explorationTime;
+      for (let i = 0; i < finalPath.length; ++i) {
+        let row = finalPath[i][0];
+        let col = finalPath[i][1];
+        setTimeout(() => {
+          let currentCellHTML = document.getElementById(
+            `row-${row}-col-${col}`
+          );
+          currentCellHTML.classList.add("finalpath-cell");
+        }, finalPathExplorationTime);
+        finalPathExplorationTime += 30;
+      }
+
+      console.log(parent[10][26]);
+
+      console.log("Path UI done");
+      console.log(finalPath);
+    }
   }
 }
 
