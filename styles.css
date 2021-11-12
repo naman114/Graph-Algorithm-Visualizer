@@ -63,3 +63,7 @@ body {
 .obstacle-cell{
     background-color: black;
 }
+
+.bomb-cell{
+    background-color: orangered;
+}
