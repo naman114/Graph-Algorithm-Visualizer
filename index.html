@@ -28,37 +28,34 @@
                             Algorithm
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Breadth First Search</a></li>
-                            <li><a class="dropdown-item" href="#">Depth First Search</a></li>
-                            <li><a class="dropdown-item" href="#">Dijkstra's Algorithm</a></li>
-                            <li><a class="dropdown-item" href="#">A* Search Algorithm</a></li>
+                            <li><a class="dropdown-item algo-option" href="#">Breadth First Search</a></li>
+                            <li><a class="dropdown-item algo-option" href="#">Depth First Search</a></li>
+                            <li><a class="dropdown-item algo-option" href="#">Dijkstra's Algorithm</a></li>
+                            <li><a class="dropdown-item algo-option" href="#">A* Search Algorithm</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown px-3">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false" data-value="Average">
+                        <a class="nav-link dropdown-toggle" href="#" id="speed-dropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false" data-speed="70">
                             Speed: Average
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Fast</a></li>
-                            <li><a class="dropdown-item" href="#">Average</a></li>
-                            <li><a class="dropdown-item" href="#">Slow</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="speed-dropdown">
+                            <li><a class="dropdown-item algo-speed" href="#">Fast</a></li>
+                            <li><a class="dropdown-item algo-speed" href="#">Average</a></li>
+                            <li><a class="dropdown-item algo-speed" href="#">Slow</a></li>
                         </ul>
                     </li>
                     <li class="nav-item px-3">
-                        <button type="button" class="btn btn-primary" value="">Visualize!</button>
+                        <button id="visualize-btn" type="button" class="btn btn-primary" value="">Visualize!</button>
                     </li>
                     <li class="nav-item px-3">
-                        <button type="button" class="btn btn-warning">Reset Grid</button>
+                        <button id="reset-btn" type="button" class="btn btn-warning">Reset Grid</button>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
     <div class="container my-3">
-
-        <input type="button" value="Start BFS" id="start">
-        <input type="button" value="Reset Grid" id="reset-grid">
 
         <div class="grid">
             <div class="grid-container">
@@ -75,7 +72,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous">
     </script>
-    <script src="Astar.js"></script>
+    <script defer src="script.js"></script>
+    <script src="Algorithms/BFS.js"></script>
+    <script src="Algorithms/DFS.js"></script>
+    <script src="Algorithms/Dijkstra.js"></script>
+    <script src="Algorithms/AStar.js"></script>
 </body>
 
 </html>
