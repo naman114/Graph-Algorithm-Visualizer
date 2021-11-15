@@ -45,11 +45,15 @@ body {
 
 /* Cell States */
 .source-cell{
-    background-color: lime;
+    background-image: url('assets/src-node.svg');
+    background-position: center;
+    background-color: white;
 }
 
 .destination-cell{
-    background-color: red;
+    background-image: url('assets/target-node.svg');
+    background-position: center;
+    background-color: white;
 }
 
 .explore-cell{
@@ -57,7 +61,8 @@ body {
 }
 
 .bomb-cell{
-    background-color: orangered;
+    background-image: url('assets/bomb.svg');
+    background-position: center;
 }
 
 .obstacle-cell{

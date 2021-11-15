@@ -72,10 +72,19 @@ function resetGrid() {
   for (let cell of allGridCells) {
     let row = cell.id.split("-")[1];
     let col = cell.id.split("-")[3];
-    if ((row == srcRow && col == srcCol) || (row == desRow && col == desCol))
-      continue;
+    if (row == srcRow && col == srcCol)
+      cell.classList = "grid-cell source-cell";
+    else if (row == desRow && col == desCol)
+      cell.classList = "grid-cell destination-cell";
+    else cell.classList = "grid-cell";
+  }
+}
 
-    cell.classList = "grid-cell";
+function clearExploration() {
+  let allGridCells = document.querySelectorAll(".grid-cell");
+  for (let cell of allGridCells) {
+    cell.classList.remove("explore-cell");
+    cell.classList.remove("finalpath-cell");
   }
 }
 
@@ -88,7 +97,7 @@ let alogrithmCodes = {
 
 for (let dropDownItem of algoPicker) {
   dropDownItem.addEventListener("click", () => {
-    resetGrid();
+    clearExploration();
     visualizeBtn.innerText = `Visualize ${dropDownItem.innerText}!`;
     visualizeBtn.value = alogrithmCodes[dropDownItem.innerText];
   });
@@ -110,6 +119,7 @@ for (let dropDownItem of algoSpeedPicker) {
 
 // Starting visualization on click
 visualizeBtn.addEventListener("click", () => {
+  clearExploration();
   let explorationTime = Number(algoSpeed.dataset.speed);
   if (visualizeBtn.value == "1") BFS(explorationTime);
   else if (visualizeBtn.value == "2") DFS(explorationTime);
