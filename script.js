@@ -1,11 +1,11 @@
 // Defining Source and Destination Cells
-const totalRows = 16;
-const totalCols = 32;
+let totalRows = 16;
+let totalCols = 32;
 
-const srcRow = 9;
-const srcCol = 7;
-const desRow = 11;
-const desCol = 27;
+let srcRow = 9;
+let srcCol = 7;
+let desRow = 11;
+let desCol = 27;
 
 // Setting the grid
 let gridContainer = document.querySelector(".grid-container");
@@ -125,4 +125,88 @@ visualizeBtn.addEventListener("click", () => {
   else if (visualizeBtn.value == "2") DFS(explorationTime);
   else if (visualizeBtn.value == "3") Dijkstra(explorationTime);
   else if (visualizeBtn.value == "4") AStar(explorationTime);
+  // console.clear();
 });
+
+/*
+// Draggability
+var dragged;
+let sourceCell = document.querySelector(".grid-cell.source-cell");
+let destCell = document.querySelector(".grid-cell.destination-cell");
+
+let cellsToDrag = document.querySelectorAll(".grid-cell");
+
+for (let cell of cellsToDrag) {
+  cell.addEventListener("drag", () => {}, false);
+
+  cell.addEventListener(
+    "dragstart",
+    (e) => {
+      dragged = e.target;
+      e.target.style.opacity = 0.5;
+    },
+    false
+  );
+
+  cell.addEventListener(
+    "dragend",
+    (e) => {
+      e.target.style.opacity = "";
+    },
+    false
+  );
+
+  cell.addEventListener("dragover", (e) => {
+    e.preventDefault();
+  });
+
+  cell.addEventListener(
+    "dragenter",
+    (e) => {
+      console.log(e.target.className);
+      if (e.target.className == "grid-cell") {
+        e.target.style.background = "rgba(128, 128, 128, 0.288)";
+      }
+    },
+    false
+  );
+
+  cell.addEventListener(
+    "dragleave",
+    (e) => {
+      if (e.target.className == "grid-cell") {
+        e.target.style.background = "";
+      }
+    },
+    false
+  );
+
+  cell.addEventListener(
+    "drop",
+    (e) => {
+      e.preventDefault();
+      if (e.target.className == "grid-cell") {
+        e.target.style.background = "";
+        if (dragged.classList.contains("source-cell")) {
+          dragged.classList.remove("source-cell");
+          e.target.classList.add("source-cell");
+          let idData = e.target.id.split("-");
+          let row = Number(idData[1]);
+          let col = Number(idData[3]);
+          srcRow = row;
+          srcCol = col;
+        } else {
+          dragged.classList.remove("destination-cell");
+          e.target.classList.add("destination-cell");
+          let idData = e.target.id.split("-");
+          let row = Number(idData[1]);
+          let col = Number(idData[3]);
+          desRow = row;
+          desCol = col;
+        }
+      }
+    },
+    false
+  );
+}
+*/
