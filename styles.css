@@ -1,5 +1,7 @@
 *{
     box-sizing: border-box;
+    /* font-family: 'Poppins', sans-serif; */
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -41,6 +43,14 @@ body {
     background-color: gray;
     border: 1px solid lightgray;
     font-size: 18px;
+}
+
+/* Static Grid Cell for Legend */
+.legend-grid-cell{
+    width: 25px;
+    height: 25px;
+    background-color: gray;
+    border: 1px solid lightgray;
 }
 
 /* Cell States */
