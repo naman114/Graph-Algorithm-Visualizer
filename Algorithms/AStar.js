@@ -110,7 +110,7 @@ function AStar(speed) {
 
     console.log(row, col);
     if (row == desRow && col == desCol) {
-      console.log("YES Milgya");
+      console.log("YES");
       break;
     }
     console.log("Hello");

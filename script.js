@@ -130,6 +130,7 @@ visualizeBtn.addEventListener("click", () => {
 
 /*
 // Draggability
+// https://jsfiddle.net/radonirinamaminiaina/zfnj5rv4/
 var dragged;
 let sourceCell = document.querySelector(".grid-cell.source-cell");
 let destCell = document.querySelector(".grid-cell.destination-cell");
