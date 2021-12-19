@@ -210,6 +210,7 @@ Naman Gogia - [Linkedin](https://www.linkedin.com/in/namangogia/) - namangogia20
 Ritik Arora - [Linkedin](https://www.linkedin.com/in/ritik-arora-49b312197/) - ritikarora656@gmail.com
 
 Hosted Website: [https://graphalgorithms.netlify.app/](https://graphalgorithms.netlify.app/)
+<br>
 Project Link: [https://github.com/naman114/Graph-Algorithm-Visualizer](https://github.com/naman114/Graph-Algorithm-Visualizer)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
